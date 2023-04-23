@@ -11,11 +11,13 @@ export class AwsSampleStoreStack extends cdk.Stack {
     const database = new StoreDatabase(this, 'StoreDatabase');                   // DynamoDB
 
     const microservices = new StoreMicroservices(this, 'StoreMicroservices', {   // Lambda
-      productTable: database.productTable
+      productTable: database.productTable,
+      basketTable: database.basketTable
     });
 
     const apigateway = new StoreApiGateway(this, 'StoreApiGateway', {            // API Gateway
       productMicroservice: microservices.productMicroservice,
+      basketMicroservice: microservices.basketMicroservice
     });
   }
 }

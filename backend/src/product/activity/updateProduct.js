@@ -1,6 +1,6 @@
 import { UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import { ddbClient } from "./ddbClient";
+import { ddbClient } from "../ddbClient";
 
 export const updateProduct = async (event) => {
     console.log(`updateProduct function. event : "${event}"`);
@@ -31,5 +31,4 @@ export const updateProduct = async (event) => {
         console.error(e);
         throw e;
     }
-
 }

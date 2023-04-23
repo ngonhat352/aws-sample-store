@@ -4,11 +4,12 @@ import { Construct } from "constructs";
 
 export class StoreDatabase extends Construct {
     public readonly productTable: ITable;
+    public readonly basketTable: ITable;
 
     constructor(scope: Construct, id: string) {
         super(scope, id);
 
-        // Product DynamoDb Table Creation
+        // Product DynamoDB Table Creation
         const productTable = new Table(this, 'product', {
             partitionKey: {
                 name: 'id',
@@ -18,8 +19,18 @@ export class StoreDatabase extends Construct {
             removalPolicy: RemovalPolicy.DESTROY,
             billingMode: BillingMode.PAY_PER_REQUEST
         });
-
         this.productTable = productTable;
-    }
 
+        // Basket DynamoDB Table Creation
+        const basketTable = new Table(this, 'basket', {
+            partitionKey: {
+                name: 'userName',
+                type: AttributeType.STRING,
+            },
+            tableName: 'basket',
+            removalPolicy: RemovalPolicy.DESTROY,
+            billingMode: BillingMode.PAY_PER_REQUEST
+        });
+        this.basketTable = basketTable;
+    }
 }

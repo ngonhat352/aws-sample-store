@@ -1,6 +1,6 @@
 import { QueryCommand } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
-import { ddbClient } from "./ddbClient";
+import { ddbClient } from "../ddbClient";
 
 export const getProductsByCategory = async (event) => {
     console.log("getProductsByCategory");
