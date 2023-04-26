@@ -3,50 +3,50 @@ import { IFunction } from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 
 interface StoreApiGatewayProps {
-    productMicroservice: IFunction,
-    basketMicroservice: IFunction
+  productMicroservice: IFunction;
+  basketMicroservice: IFunction;
 }
 
 export class StoreApiGateway extends Construct {
-    constructor(scope: Construct, id: string, props: StoreApiGatewayProps) {
-        super(scope, id);
-        this.createProductApi(props.productMicroservice);
-        this.createBasketApi(props.basketMicroservice);
-    }
+  constructor(scope: Construct, id: string, props: StoreApiGatewayProps) {
+    super(scope, id);
+    this.createProductApi(props.productMicroservice);
+    this.createBasketApi(props.basketMicroservice);
+  }
 
-    private createProductApi(productMicroservice: IFunction) {
-        const apigw = new LambdaRestApi(this, 'productApi', {
-            restApiName: 'Product Service',
-            handler: productMicroservice,
-            proxy: false
-        });
+  private createProductApi(productMicroservice: IFunction) {
+    const apigw = new LambdaRestApi(this, "productApi", {
+      restApiName: "Product Service",
+      handler: productMicroservice,
+      proxy: false,
+    });
 
-        const product = apigw.root.addResource('product'); // root name: 'product'
-        product.addMethod('GET'); // GET /product
-        product.addMethod('POST');  // POST /product
+    const product = apigw.root.addResource("product"); // root name: 'product'
+    product.addMethod("GET"); // GET /product
+    product.addMethod("POST"); // POST /product
 
-        const singleProduct = product.addResource('{id}'); // product/{id}
-        singleProduct.addMethod('GET'); // GET /product/{id}
-        singleProduct.addMethod('PUT'); // PUT /product/{id}
-        singleProduct.addMethod('DELETE'); // DELETE /product/{id}
-    }
+    const singleProduct = product.addResource("{id}"); // product/{id}
+    singleProduct.addMethod("GET"); // GET /product/{id}
+    singleProduct.addMethod("PUT"); // PUT /product/{id}
+    singleProduct.addMethod("DELETE"); // DELETE /product/{id}
+  }
 
-    private createBasketApi(basketMicroservice: IFunction) {
-        const apigw = new LambdaRestApi(this, 'basketApi', {
-            restApiName: 'Basket Service',
-            handler: basketMicroservice,
-            proxy: false
-        });
+  private createBasketApi(basketMicroservice: IFunction) {
+    const apigw = new LambdaRestApi(this, "basketApi", {
+      restApiName: "Basket Service",
+      handler: basketMicroservice,
+      proxy: false,
+    });
 
-        const basket = apigw.root.addResource('basket'); // root name: 'basket'
-        basket.addMethod('GET');  // GET /basket
-        basket.addMethod('POST');  // POST /basket
+    const basket = apigw.root.addResource("basket"); // root name: 'basket'
+    basket.addMethod("GET"); // GET /basket
+    basket.addMethod("POST"); // POST /basket
 
-        const singleBasket = basket.addResource('{userName}');
-        singleBasket.addMethod('GET');  // GET /basket/{userName}
-        singleBasket.addMethod('DELETE'); // DELETE /basket/{userName}
+    const singleBasket = basket.addResource("{userName}");
+    singleBasket.addMethod("GET"); // GET /basket/{userName}
+    singleBasket.addMethod("DELETE"); // DELETE /basket/{userName}
 
-        const basketCheckout = basket.addResource('checkout');
-        basketCheckout.addMethod('POST'); // POST /basket/checkout
-    }
+    const basketCheckout = basket.addResource("checkout");
+    basketCheckout.addMethod("POST"); // POST /basket/checkout
+  }
 }

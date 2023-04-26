@@ -1,8 +1,8 @@
-import { getProduct } from "./activity/getProduct";
-import { getProductsByCategory } from "./activity/getProductsByCategory";
-import { getAllProducts } from "./activity/getAllProducts";
 import { createProduct } from "./activity/createProduct";
 import { deleteProduct } from "./activity/deleteProduct";
+import { getAllProducts } from "./activity/getAllProducts";
+import { getProduct } from "./activity/getProduct";
+import { getProductsByCategory } from "./activity/getProductsByCategory";
 import { updateProduct } from "./activity/updateProduct";
 
 // See event format and response format here: https://docs.aws.amazon.com/lambda/latest/dg/services-apigateway.html
@@ -13,8 +13,7 @@ exports.handler = async function (event) {
       case "GET":
         if (event.queryStringParameters != null) {
           body = await getProductsByCategory(event); // GET product/1234?category=Phone
-        }
-        else if (event.pathParameters != null) {
+        } else if (event.pathParameters != null) {
           body = await getProduct(event.pathParameters.id); // GET product/{id}
         } else {
           body = await getAllProducts(); // GET product
@@ -38,10 +37,9 @@ exports.handler = async function (event) {
       statusCode: 200,
       body: JSON.stringify({
         message: `Successfully finished operation: "${event.httpMethod}"`,
-        body: body
-      })
+        body: body,
+      }),
     };
-
   } catch (e) {
     console.error(e);
     return {
@@ -50,7 +48,7 @@ exports.handler = async function (event) {
         message: "Failed to perform operation.",
         errorMsg: e.message,
         errorStack: e.stack,
-      })
+      }),
     };
   }
 };

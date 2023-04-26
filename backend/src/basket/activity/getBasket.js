@@ -3,20 +3,20 @@ import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { ddbClient } from "../ddbClient";
 
 export const getBasket = async (userName) => {
-    console.log("getBasket");
-    try {
-        const params = {
-            TableName: process.env.DYNAMODB_TABLE_NAME,
-            Key: marshall({ userName: userName })
-        };
+  console.log("getBasket");
+  try {
+    const params = {
+      TableName: process.env.DYNAMODB_TABLE_NAME,
+      Key: marshall({ userName: userName }),
+      ConsistentRead: true, // Note: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html
+    };
 
-        const { Item } = await ddbClient.send(new GetItemCommand(params));
+    const { Item } = await ddbClient.send(new GetItemCommand(params));
 
-        console.log(Item);
-        return (Item) ? unmarshall(Item) : {};
-
-    } catch (e) {
-        console.error(e);
-        throw e;
-    }
-}
+    console.log(Item);
+    return Item ? unmarshall(Item) : {};
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};

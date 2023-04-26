@@ -1,8 +1,8 @@
-import { getBasket } from "./activity/getBasket";
-import { getAllBaskets } from "./activity/getAllBaskets";
+import { checkoutBasket } from "./activity/checkoutBasket";
 import { createBasket } from "./activity/createBasket";
 import { deleteBasket } from "./activity/deleteBasket";
-import { checkoutBasket } from "./activity/checkoutBasket";
+import { getAllBaskets } from "./activity/getAllBaskets";
+import { getBasket } from "./activity/getBasket";
 
 exports.handler = async function (event) {
   console.log("request:", JSON.stringify(event, undefined, 2));
@@ -37,10 +37,9 @@ exports.handler = async function (event) {
       statusCode: 200,
       body: JSON.stringify({
         message: `Successfully finished operation: "${event.httpMethod}"`,
-        body: body
-      })
+        body: body,
+      }),
     };
-
   } catch (e) {
     console.error(e);
     return {
@@ -49,7 +48,7 @@ exports.handler = async function (event) {
         message: "Failed to perform operation.",
         errorMsg: e.message,
         errorStack: e.stack,
-      })
+      }),
     };
   }
 };
