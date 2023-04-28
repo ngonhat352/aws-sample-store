@@ -8,11 +8,13 @@ import { updateProduct } from "./activity/updateProduct";
 // See event format and response format here: https://docs.aws.amazon.com/lambda/latest/dg/services-apigateway.html
 exports.handler = async function (event) {
   console.log("request:", JSON.stringify(event, undefined, 2));
+  let body;
+
   try {
     switch (event.httpMethod) {
       case "GET":
         if (event.queryStringParameters != null) {
-          body = await getProductsByCategory(event); // GET product/1234?category=Phone
+          body = await getProductsByCategory(event); // GET product/?category=Car
         } else if (event.pathParameters != null) {
           body = await getProduct(event.pathParameters.id); // GET product/{id}
         } else {

@@ -27,7 +27,7 @@ export class AwsSampleStoreStack extends cdk.Stack {
     });
 
     // EventBus
-    const eventbus = new StoreEventBus(this, "EventBus", {
+    const eventbus = new StoreEventBus(this, "StoreEventBus", {
       publisherFuntion: microservices.basketMicroservice,
       targetFuntion: microservices.orderMicroservice,
     });

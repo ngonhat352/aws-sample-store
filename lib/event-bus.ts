@@ -12,8 +12,8 @@ export class StoreEventBus extends Construct {
   constructor(scope: Construct, id: string, props: StoreEventBusProps) {
     super(scope, id);
 
-    const bus = new EventBus(this, "SwnEventBus", {
-      eventBusName: "SwnEventBus",
+    const bus = new EventBus(this, "StoreCustomEventBus", {
+      eventBusName: "StoreCustomEventBus",
     });
 
     const checkoutBasketRule = new Rule(this, "CheckoutBasketRule", {
@@ -21,7 +21,7 @@ export class StoreEventBus extends Construct {
       enabled: true,
       description: "When Basket microservice checkout the basket",
       eventPattern: {
-        source: ["com.swn.basket.checkoutbasket"],
+        source: ["com.ngonhat352.basket.checkoutbasket"],
         detailType: ["CheckoutBasket"],
       },
       ruleName: "CheckoutBasketRule",

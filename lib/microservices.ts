@@ -36,9 +36,9 @@ export class StoreMicroservices extends Construct {
       runtime: Runtime.NODEJS_14_X,
     };
 
-    /** use NodejsFunction instead of normal Function from AWS Lambda 
+    /** NOTE-N: use NodejsFunction instead of normal Function from AWS Lambda 
         to access its bundling and packaging features
-        Note: will require Docker Desktop */
+        => will require Docker Desktop */
     const productFunction = new NodejsFunction(this, "productLambdaFunction", {
       entry: join(__dirname, "..", "backend", "src", "product", "index.js"),
       ...nodeJsFunctionProps,
@@ -54,6 +54,9 @@ export class StoreMicroservices extends Construct {
       environment: {
         PRIMARY_KEY: "userName",
         DYNAMODB_TABLE_NAME: basketTable.tableName,
+        EVENT_SOURCE: "com.ngonhat352.basket.checkoutbasket",
+        EVENT_DETAILTYPE: "CheckoutBasket",
+        EVENT_BUSNAME: "StoreCustomEventBus",
       },
       runtime: Runtime.NODEJS_14_X,
     };

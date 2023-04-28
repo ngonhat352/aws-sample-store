@@ -8,7 +8,7 @@ export const getBasket = async (userName) => {
     const params = {
       TableName: process.env.DYNAMODB_TABLE_NAME,
       Key: marshall({ userName: userName }),
-      ConsistentRead: true, // Note: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html
+      ConsistentRead: true, // NOTE-N: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html
     };
 
     const { Item } = await ddbClient.send(new GetItemCommand(params));
