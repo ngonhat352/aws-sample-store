@@ -1,8 +1,6 @@
-# Welcome to your CDK TypeScript project
-
-This is a blank project for CDK development with TypeScript.
-
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## Tech stack
+* `AWS CDK & CloudFormation` for Infrastructure as code
+* `AWS Lambda, DynamoDB, API Gateway, EventBridge` for 3 endpoints
 
 ## Useful commands
 
